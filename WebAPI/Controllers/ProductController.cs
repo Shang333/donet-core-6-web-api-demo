@@ -19,5 +19,45 @@ namespace WebAPI.Controllers
         {
             return await _dataContext.Products.ToListAsync();
         }
+        [HttpPost]
+        public async Task<IEnumerable<Product>> Post(Product product)
+        {
+            await _dataContext.Products.AddAsync(product);
+            await _dataContext.SaveChangesAsync();
+            return await _dataContext.Products.ToListAsync();
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult> Get(int id) 
+        {
+            var product = await  _dataContext.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
+        }
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, Product product)
+        {
+            if(id == 0) {
+                return BadRequest();
+            }
+            _dataContext.Entry(product).State = EntityState.Modified;
+            await _dataContext.SaveChangesAsync();
+
+            return Ok();
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id) {
+            var product = await _dataContext.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            _dataContext.Products.Remove(product);
+            await _dataContext.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
