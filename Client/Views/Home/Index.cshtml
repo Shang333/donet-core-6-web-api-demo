@@ -1,8 +1,96 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Client.Models.Product>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <h2>Product</h2>
+    <form asp-controller="Product"  method="post">
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" name="name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Price:</label>
+            <input type="text" name="price" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary" asp-action="Add" method="post">Add</button><span />
+@*         <button type="submit" class="btn btn-info">Edit</button><span /> *@
+@*         <button type="submit" class="btn btn-danger">Delete</button><span /> *@
+    </form>
+    <hr />
+    <h2>Product List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Product", new { id = product.Id })">Edit</a> |
+                            <form asp-controller="Product" asp-action="Delete" method="post" class="delete-form">
+                                <input type="hidden" name="id" value="@product.Id" />
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
 </div>
+@* <script type="text/javascript" scr="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        getDetails();
+    };);
+    let ProductId = '';
+
+    function onEdit(id) {
+        ProductId = id;
+        var options = {};
+        options.url = "http://localhost:5213/api/Product/" + id;
+        options.type = "GET";
+        options.success = function (msg) {
+            if (msg !== undefined && msg !== null) {
+                $("#txtName").val(msg.name);
+                $("#txtPrice").val(msg.price);
+            }
+        };
+
+        options.error = function () {
+            console.log("Error while calling the Web API!!");
+        };
+
+        $.ajax(options);
+    }
+
+    function onDelete(id) {
+
+    }
+    function getDetails(id) {
+
+    }
+    function Create(id) {
+
+    }
+    function Update(id) {
+
+    }
+    function Clear(id) {
+
+    }
+    function onEdit(id) {
+
+    }
+</script> *@

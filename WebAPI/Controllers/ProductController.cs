@@ -17,47 +17,100 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IEnumerable<Product>> Get()
         {
-            return await _dataContext.Products.ToListAsync();
+            try
+            {
+                return await _dataContext.Products.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
         }
-        [HttpPost]
+        [HttpPost, ActionName("Add")]
         public async Task<IEnumerable<Product>> Post(Product product)
         {
-            await _dataContext.Products.AddAsync(product);
-            await _dataContext.SaveChangesAsync();
-            return await _dataContext.Products.ToListAsync();
+            try
+            {
+                if (product == null)
+                {
+                    return Enumerable.Empty<Product>();
+                }
+                await _dataContext.Products.AddAsync(product);
+                await _dataContext.SaveChangesAsync();
+                return await _dataContext.Products.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }        
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id) 
         {
-            var product = await  _dataContext.Products.FindAsync(id);
-            if (product == null)
+            try
             {
-                return NotFound();
+                if(id == 0)
+                {
+                    return NotFound();
+                }
+                var product = await _dataContext.Products.FindAsync(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                return Ok(product);
             }
-            return Ok(product);
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }          
         }
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), ActionName("Edit")]
         public async Task<ActionResult> Put(int id, Product product)
         {
-            if(id == 0) {
-                return BadRequest();
-            }
-            _dataContext.Entry(product).State = EntityState.Modified;
-            await _dataContext.SaveChangesAsync();
+            try
+            {
+                if (id == 0)
+                {
+                    return BadRequest();
+                }
+                if (product ==  null)
+                {
+                    return BadRequest();
+                }
+                _dataContext.Entry(product).State = EntityState.Modified;
+                await _dataContext.SaveChangesAsync();
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id) {
-            var product = await _dataContext.Products.FindAsync(id);
-            if (product == null)
+            try
             {
-                return NotFound();
-            }
-            _dataContext.Products.Remove(product);
-            await _dataContext.SaveChangesAsync();
+                if (id == 0)
+                {
+                    return NotFound();
+                }
+                var product = await _dataContext.Products.FindAsync(id);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+                _dataContext.Products.Remove(product);
+                await _dataContext.SaveChangesAsync();
 
-            return Ok();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception();
+            };
+
         }
     }
 }

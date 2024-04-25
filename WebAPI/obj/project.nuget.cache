@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0wKFyWdaen+ZgXPvbyGmGLpxbCXWP0NAx9zH/DQIP23aB1hxFeVmsB+Mo1DGb5EPCgWsuitIaxVgT+611ab1Rw==",
+  "dgSpecHash": "ChEOGyERgcQcxf5uY+zPCwkMmxlsnja5QHTXIN7tdpS3Cjx5WH+krN7FEawnPuS9sNF6XQ9DHHvGIjhul+3oVw==",
   "success": true,
   "projectFilePath": "C:\\.net practice\\DemoWebAPI\\DemoWebAPI\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\USER\\.nuget\\packages\\bootstrap\\5.3.3\\bootstrap.5.3.3.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.aspnet.cors\\5.3.0\\microsoft.aspnet.cors.5.3.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
